@@ -24,6 +24,19 @@ class _MasukState extends State<Masuk> {
   TextEditingController controllerUsername = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
+  int isMasuk = 0;
+
+  var list = [
+    {
+      "name": "raga2",
+      "status": 0,
+    },
+    {
+      "name": "ragaaa",
+      "status": 1,
+    },
+  ];
+
   AudioPlayer player = AudioPlayer();
   late Uint8List audiobytes;
 
@@ -92,6 +105,11 @@ class _MasukState extends State<Masuk> {
     super.initState();
     // play();
     // masuk();
+    DateTime date = DateTime.now();
+    String format = DateFormat('hh:mm').format(date);
+    print(format);
+    var result = list.takeWhile((value) => value['name'] == "raga2");
+    print(result);
   }
 
   @override
@@ -101,7 +119,12 @@ class _MasukState extends State<Masuk> {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: const Text("MASUK", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600)),
+        title: const Text("MASUK",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.w600)),
         actions: [
           IconButton(
             onPressed: () {
@@ -142,23 +165,33 @@ class _MasukState extends State<Masuk> {
                     ? Column(
                         children: [
                           Text(
-                            data['barcode'].toString() == 'null' ? '' : data['barcode'].toString(),
+                            data['barcode'].toString() == 'null'
+                                ? ''
+                                : data['barcode'].toString(),
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                           Text(
-                            data['FullName'].toString() == 'null' ? '' : data['FullName'].toString(),
+                            data['FullName'].toString() == 'null'
+                                ? ''
+                                : data['FullName'].toString(),
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                           Text(
-                            data['Tanggal'].toString() == 'null' ? '' : data['Tanggal'].toString(),
+                            data['Tanggal'].toString() == 'null'
+                                ? ''
+                                : data['Tanggal'].toString(),
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                           Text(
-                            data['waktu'].toString() == 'null' ? '' : data['waktu'].toString(),
+                            data['waktu'].toString() == 'null'
+                                ? ''
+                                : data['waktu'].toString(),
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                           Text(
-                            data['status'].toString() == 'null' ? '' : data['status'].toString(),
+                            data['status'].toString() == 'null'
+                                ? ''
+                                : data['status'].toString(),
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                         ],
@@ -172,10 +205,14 @@ class _MasukState extends State<Masuk> {
             child: DigitalClock(
               is24HourTimeFormat: true,
               areaDecoration: const BoxDecoration(color: Colors.transparent),
-              hourMinuteDigitTextStyle: const TextStyle(color: Colors.white, fontSize: 50),
-              hourMinuteDigitDecoration: const BoxDecoration(color: Colors.transparent),
-              secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-              secondDigitTextStyle: const TextStyle(color: Colors.white, fontSize: 50),
+              hourMinuteDigitTextStyle:
+                  const TextStyle(color: Colors.white, fontSize: 50),
+              hourMinuteDigitDecoration:
+                  const BoxDecoration(color: Colors.transparent),
+              secondDigitDecoration:
+                  const BoxDecoration(color: Colors.transparent),
+              secondDigitTextStyle:
+                  const TextStyle(color: Colors.white, fontSize: 50),
             ),
           ),
         ],
@@ -185,7 +222,8 @@ class _MasukState extends State<Masuk> {
 
   void play() async {
     ByteData bytes = await rootBundle.load("assets/Announce.mp3");
-    audiobytes = bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    audiobytes =
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
     await player.playBytes(audiobytes);
   }
 
@@ -249,7 +287,8 @@ class _MasukState extends State<Masuk> {
   }
 
   void setup() async {
-    if (controllerUsername.text != 'admin' && controllerPassword.text != 'admin') {
+    if (controllerUsername.text != 'admin' &&
+        controllerPassword.text != 'admin') {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -272,7 +311,8 @@ class _MasukState extends State<Masuk> {
     } else {
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.clear();
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const Login()), (route) => false);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (_) => const Login()), (route) => false);
     }
   }
 
@@ -287,16 +327,25 @@ class _MasukState extends State<Masuk> {
             children: [
               Text(
                 'STOP !',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.yellow),
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.yellow),
               ),
               Divider(color: Colors.yellow, thickness: 5),
               Text(
                 'KEPADA $nama',
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.yellow),
+                style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.yellow),
               ),
               Text(
                 'MOHON HUBUNGI POLIKLINIK PERUSAHAAN ATAU SATPAM',
-                style: TextStyle(fontSize: 33, fontWeight: FontWeight.w600, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 33,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
               ),
             ],
           ),
