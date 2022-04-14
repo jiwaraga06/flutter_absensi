@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_absensi/source/keluar.dart';
 import 'package:flutter_absensi/source/login.dart';
 import 'package:flutter_absensi/source/masuk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (status == '0') {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Masuk()));
     } else if (status == '1') {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Masuk()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Keluar()));
     } else if (status == null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Login()));
     }

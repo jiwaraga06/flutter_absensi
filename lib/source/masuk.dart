@@ -37,36 +37,44 @@ class _MasukState extends State<Masuk> {
       var json = jsonDecode(value.body);
       print(json);
       if (json is List) {
-        Network().absen(id, terminal).then((value) async {
-          var json = jsonDecode(value.body);
-          print("JSON ABSEN MASUK: $json");
-          if (json['status'] == 200) {
-            Network().getLastId(id).then((value) async {
-              var jsonLast = jsonDecode(value.body);
-              print(jsonLast);
-              if (jsonLast is List) {
-                setState(() {
-                  data = jsonLast[0];
-                  Timer(Duration(seconds: 3), () {
-                    data.clear();
+        if (json[0]['statuz'] == 1) {
+          Network().absen(id, terminal).then((value) async {
+            var json = jsonDecode(value.body);
+            print("JSON ABSEN MASUK: $json");
+            if (json['status'] == 200) {
+              Network().getLastId(id).then((value) async {
+                var jsonLast = jsonDecode(value.body);
+                print(jsonLast);
+                if (jsonLast is List) {
+                  setState(() {
+                    data = jsonLast[0];
+                    Timer(Duration(seconds: 3), () {
+                      data.clear();
+                    });
+                    controller.clear();
                   });
-                  controller.clear();
-                });
-              } else {
-                setState(() {
-                  data = jsonLast;
-                  Timer(Duration(seconds: 3), () {
-                    data.clear();
+                } else {
+                  setState(() {
+                    data = jsonLast;
+                    Timer(Duration(seconds: 3), () {
+                      data.clear();
+                    });
+                    controller.clear();
                   });
-                  controller.clear();
-                });
-              }
-              print("Data: $data");
-            });
-          } else {
-            gagalAbsen(json['status'].toString());
-          }
-        });
+                }
+                print("Data: $data");
+              });
+            } else {
+              gagalAbsen(json['status'].toString());
+            }
+          });
+        } else if (json[0]['statuz'] == 2) {
+          play();
+          alertPoli(json[0]['FullName']);
+          await Future.delayed(Duration(seconds: 5));
+          Navigator.pop(context);
+          controller.clear();
+        }
       } else {
         setState(() {
           data = json;
@@ -82,7 +90,7 @@ class _MasukState extends State<Masuk> {
   @override
   void initState() {
     super.initState();
-    play();
+    // play();
     // masuk();
   }
 
@@ -116,7 +124,8 @@ class _MasukState extends State<Masuk> {
             child: Column(
               children: [
                 TextFormField(
-                  style: const TextStyle(color: Colors.green),
+                  controller: controller,
+                  style: const TextStyle(color: Colors.white),
                   cursorColor: Colors.green,
                   decoration: const InputDecoration(
                     fillColor: Colors.green,
@@ -125,7 +134,7 @@ class _MasukState extends State<Masuk> {
                   onChanged: (value) async {
                     if (value.length >= 9) {
                       await Future.delayed(Duration(milliseconds: 650));
-                      masuk(value);
+                      masuk(controller.text);
                     }
                   },
                 ),
@@ -265,5 +274,34 @@ class _MasukState extends State<Masuk> {
       pref.clear();
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const Login()), (route) => false);
     }
+  }
+
+  void alertPoli(nama) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.red,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'STOP !',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.yellow),
+              ),
+              Divider(color: Colors.yellow, thickness: 5),
+              Text(
+                'KEPADA $nama',
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.yellow),
+              ),
+              Text(
+                'MOHON HUBUNGI POLIKLINIK PERUSAHAAN ATAU SATPAM',
+                style: TextStyle(fontSize: 33, fontWeight: FontWeight.w600, color: Colors.white),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
