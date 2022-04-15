@@ -16,13 +16,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void getStatus() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var status = pref.getString('status');
-    if (status == '0') {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Masuk()));
-    } else if (status == '1') {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Keluar()));
-    } else if (status == null) {
+    // if (status == '0') {
+    //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Masuk()));
+    // } else if (status == '1') {
+    //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Keluar()));
+    // } else if (status == null) {
+    // }
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Login()));
-    }
   }
 
   @override

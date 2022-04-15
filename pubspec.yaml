@@ -39,6 +39,7 @@ dependencies:
   slide_digital_clock: ^1.0.2
   intl: ^0.17.0
   audioplayers: ^0.20.1
+  time_range: ^1.0.2
 
 dev_dependencies:
   flutter_test:
