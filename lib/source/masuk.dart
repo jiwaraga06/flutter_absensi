@@ -22,6 +22,7 @@ class Masuk extends StatefulWidget {
 }
 
 class _MasukState extends State<Masuk> {
+  Timer? timer;
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -96,7 +97,7 @@ class _MasukState extends State<Masuk> {
     initConnectivity();
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
 
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
       getSetting();
     });
   }
@@ -104,6 +105,7 @@ class _MasukState extends State<Masuk> {
   @override
   void dispose() {
     _connectivitySubscription.cancel();
+    timer?.cancel();
     super.dispose();
   }
 
@@ -156,11 +158,9 @@ class _MasukState extends State<Masuk> {
               : _connectionStatus.name == "none"
                   ? const SizedBox(
                       height: 400,
-                      child: Center(
-                        child: Text(
-                          "No Connection Internet",
-                          style: TextStyle(color: Colors.white, fontSize: 23, fontWeight: FontWeight.w600),
-                        ),
+                      child: Text(
+                        "No Connection Internet",
+                        style: TextStyle(color: Colors.white, fontSize: 23, fontWeight: FontWeight.w600),
                       ),
                     )
                   : list.isEmpty
@@ -191,7 +191,7 @@ class _MasukState extends State<Masuk> {
                                 controller: controller,
                                 autofocus: true,
                                 // style: TextStyle(color: Colors.white),
-                                style: TextStyle(color: list['status'] == 0 ? Colors.green : Colors.red[700]),
+                                style: TextStyle(color: list['status'] == 0 ? Colors.green[600] : Colors.red[700]),
                                 cursorColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
                                 decoration: InputDecoration(
                                   fillColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
@@ -200,12 +200,12 @@ class _MasukState extends State<Masuk> {
                                 onChanged: (value) async {
                                   if (list['status'] == 0) {
                                     if (value.length >= 9) {
-                                      await Future.delayed(Duration(milliseconds: 650));
+                                      await Future.delayed(Duration(milliseconds: 700));
                                       masuk(controller.text);
                                     }
                                   } else if (list['status'] == 1) {
                                     if (value.length >= 9) {
-                                      await Future.delayed(Duration(milliseconds: 650));
+                                      await Future.delayed(Duration(milliseconds: 700));
                                       keluar(controller.text);
                                     }
                                   }
@@ -276,21 +276,21 @@ class _MasukState extends State<Masuk> {
                 if (jsonLast is List) {
                   setState(() {
                     data = jsonLast[0];
+                      controller.clear();
                   });
                   setState(() {
                     Timer(Duration(seconds: 3), () {
                       data.clear();
-                      controller.clear();
                     });
                   });
                 } else {
                   setState(() {
                     data = json;
+                    controller.clear();
                   });
                   Timer(Duration(seconds: 3), () {
                     setState(() {
                       data.clear();
-                      controller.clear();
                     });
                   });
                 }
@@ -308,11 +308,11 @@ class _MasukState extends State<Masuk> {
       } else {
         setState(() {
           data = json;
+          controller.clear();
         });
         setState(() {
           Timer(Duration(seconds: 3), () {
             data.clear();
-            controller.clear();
           });
         });
       }
@@ -338,21 +338,21 @@ class _MasukState extends State<Masuk> {
                 if (jsonLast is List) {
                   setState(() {
                     data = jsonLast[0];
+                    controller.clear();
                   });
                   setState(() {
                     Timer(Duration(seconds: 3), () {
                       data.clear();
-                      controller.clear();
                     });
                   });
                 } else {
                   setState(() {
                     data = json;
+                    controller.clear();
                   });
                   Timer(Duration(seconds: 3), () {
                     setState(() {
                       data.clear();
-                      controller.clear();
                     });
                   });
                 }
@@ -370,11 +370,11 @@ class _MasukState extends State<Masuk> {
       } else {
         setState(() {
           data = json;
+          controller.clear();
         });
         setState(() {
           Timer(Duration(seconds: 3), () {
             data.clear();
-            controller.clear();
           });
         });
       }
