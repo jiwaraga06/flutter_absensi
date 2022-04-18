@@ -64,9 +64,7 @@ class _KeluarState extends State<Keluar> {
                 }
                 print("Data: $data");
               });
-            } else {
-              gagalAbsen(json['status'].toString());
-            }
+            } 
           });
         } else if (json[0]['statuz'] == 2) {
            await Future.delayed(Duration(seconds: 5));
