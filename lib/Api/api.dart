@@ -16,6 +16,6 @@ class Api {
   }
 
   static absenKeluar(kartu, terminal) {
-    return 'http://suhu.local.sipatex.co.id:3002/sptx_attd/?kartu_id=$kartu&terminaz=$terminal&statuz=out';
+    return 'http://suhu.local.sipatex.co.id:3002/sptx_attd/?kartu_id=$kartu&terminaz=$terminal&statuz=OUT';
   }
 }

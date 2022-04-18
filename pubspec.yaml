@@ -40,6 +40,8 @@ dependencies:
   intl: ^0.17.0
   audioplayers: ^0.20.1
   time_range: ^1.0.2
+  connectivity_plus: ^2.3.0
+  data_connection_checker: ^0.3.4
 
 dev_dependencies:
   flutter_test:

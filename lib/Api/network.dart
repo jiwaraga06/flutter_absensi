@@ -42,6 +42,7 @@ class Network {
         //   "statuz": "1",
         // }
       );
+      print('absen masuk');
       return response;
     } catch (e) {
       print('Error absen id $e');
@@ -59,6 +60,7 @@ class Network {
         //   "statuz": "1",
         // }
       );
+      print('absen keluar');
       return response;
     } catch (e) {
       print('Error absen id $e');
