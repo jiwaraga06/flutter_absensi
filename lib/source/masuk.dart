@@ -181,7 +181,7 @@ class _MasukState extends State<Masuk> {
                             controller: controller,
                             autofocus: true,
                             // style: TextStyle(color: Colors.white),
-                            style: TextStyle(color: list['status'] == 0 ? Colors.green : Colors.red[700]),
+                            style: TextStyle(color: list['status'] == 0 ? Colors.green[600] : Colors.red[700]),
                             cursorColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
                             decoration: InputDecoration(
                               fillColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
