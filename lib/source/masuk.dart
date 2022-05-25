@@ -22,7 +22,6 @@ class Masuk extends StatefulWidget {
 }
 
 class _MasukState extends State<Masuk> {
-  Timer? timer;
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -97,7 +96,7 @@ class _MasukState extends State<Masuk> {
     initConnectivity();
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
 
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(Duration(seconds: 1), (timer) {
       getSetting();
     });
   }
@@ -105,7 +104,6 @@ class _MasukState extends State<Masuk> {
   @override
   void dispose() {
     _connectivitySubscription.cancel();
-    timer?.cancel();
     super.dispose();
   }
 
@@ -155,91 +153,83 @@ class _MasukState extends State<Masuk> {
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : _connectionStatus.name == "none"
-                  ? const SizedBox(
+              : list.isEmpty
+                  ? SizedBox(
                       height: 400,
-                      child: Text(
-                        "No Connection Internet",
-                        style: TextStyle(color: Colors.white, fontSize: 23, fontWeight: FontWeight.w600),
-                      ),
-                    )
-                  : list.isEmpty
-                      ? SizedBox(
-                          height: 400,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [Text('Sistem Offline', style: TextStyle(color: Colors.white, fontSize: 25))],
-                          ))
-                      : Container(
-                          margin: const EdgeInsets.all(8.0),
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                              color: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
-                              borderRadius: BorderRadius.circular(12.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  blurRadius: 3.0,
-                                  spreadRadius: 3.0,
-                                  offset: Offset(1, 3),
-                                ),
-                              ]),
-                          height: 400,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                controller: controller,
-                                autofocus: true,
-                                // style: TextStyle(color: Colors.white),
-                                style: TextStyle(color: list['status'] == 0 ? Colors.green[600] : Colors.red[700]),
-                                cursorColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
-                                decoration: InputDecoration(
-                                  fillColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
-                                  border: InputBorder.none,
-                                ),
-                                onChanged: (value) async {
-                                  if (list['status'] == 0) {
-                                    if (value.length >= 9) {
-                                      await Future.delayed(Duration(milliseconds: 700));
-                                      masuk(controller.text);
-                                    }
-                                  } else if (list['status'] == 1) {
-                                    if (value.length >= 9) {
-                                      await Future.delayed(Duration(milliseconds: 700));
-                                      keluar(controller.text);
-                                    }
-                                  }
-                                },
-                              ),
-                              data.isNotEmpty
-                                  ? Column(
-                                      children: [
-                                        Text(
-                                          data['barcode'].toString() == 'null' ? '' : data['barcode'].toString(),
-                                          style: TextStyle(color: Colors.white, fontSize: 30),
-                                        ),
-                                        Text(
-                                          data['FullName'].toString() == 'null' ? '' : data['FullName'].toString(),
-                                          style: TextStyle(color: Colors.white, fontSize: 30),
-                                        ),
-                                        Text(
-                                          data['Tanggal'].toString() == 'null' ? '' : data['Tanggal'].toString(),
-                                          style: TextStyle(color: Colors.white, fontSize: 30),
-                                        ),
-                                        Text(
-                                          data['waktu'].toString() == 'null' ? '' : data['waktu'].toString(),
-                                          style: TextStyle(color: Colors.white, fontSize: 30),
-                                        ),
-                                        Text(
-                                          data['status'].toString() == 'null' ? '' : data['status'].toString(),
-                                          style: TextStyle(color: Colors.white, fontSize: 30),
-                                        ),
-                                      ],
-                                    )
-                                  : Container()
-                            ],
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [Text('Sistem Offline', style: TextStyle(color: Colors.white, fontSize: 25))],
+                      ))
+                  : Container(
+                      margin: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          color: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
+                          borderRadius: BorderRadius.circular(12.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 3.0,
+                              spreadRadius: 3.0,
+                              offset: Offset(1, 3),
+                            ),
+                          ]),
+                      height: 400,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: controller,
+                            autofocus: true,
+                            // style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: list['status'] == 0 ? Colors.green[600] : Colors.red[700]),
+                            cursorColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
+                            decoration: InputDecoration(
+                              fillColor: list['status'] == 0 ? Colors.green[600] : Colors.red[700],
+                              border: InputBorder.none,
+                            ),
+                            onChanged: (value) async {
+                              if (list['status'] == 0) {
+                                if (value.length >= 9) {
+                                  await Future.delayed(Duration(milliseconds: 650));
+                                  masuk(controller.text);
+                                }
+                              } else if (list['status'] == 1) {
+                                if (value.length >= 9) {
+                                  await Future.delayed(Duration(milliseconds: 650));
+                                  keluar(controller.text);
+                                }
+                              }
+                            },
                           ),
-                        ),
+                          data.isNotEmpty
+                              ? Column(
+                                  children: [
+                                    Text(
+                                      data['barcode'].toString() == 'null' ? '' : data['barcode'].toString(),
+                                      style: TextStyle(color: Colors.white, fontSize: 30),
+                                    ),
+                                    Text(
+                                      data['FullName'].toString() == 'null' ? '' : data['FullName'].toString(),
+                                      style: TextStyle(color: Colors.white, fontSize: 30),
+                                    ),
+                                    Text(
+                                      data['Tanggal'].toString() == 'null' ? '' : data['Tanggal'].toString(),
+                                      style: TextStyle(color: Colors.white, fontSize: 30),
+                                    ),
+                                    Text(
+                                      data['waktu'].toString() == 'null' ? '' : data['waktu'].toString(),
+                                      style: TextStyle(color: Colors.white, fontSize: 30),
+                                    ),
+                                    Text(
+                                      data['status'].toString() == 'null' ? '' : data['status'].toString(),
+                                      style: TextStyle(color: Colors.white, fontSize: 30),
+                                    ),
+                                  ],
+                                )
+                              : Container()
+                        ],
+                      ),
+                    ),
           const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -276,11 +266,12 @@ class _MasukState extends State<Masuk> {
                 if (jsonLast is List) {
                   setState(() {
                     data = jsonLast[0];
-                      controller.clear();
+                    controller.clear();
                   });
                   setState(() {
                     Timer(Duration(seconds: 3), () {
                       data.clear();
+                      // controller.clear();
                     });
                   });
                 } else {
@@ -291,6 +282,7 @@ class _MasukState extends State<Masuk> {
                   Timer(Duration(seconds: 3), () {
                     setState(() {
                       data.clear();
+                      // controller.clear();
                     });
                   });
                 }
@@ -308,11 +300,11 @@ class _MasukState extends State<Masuk> {
       } else {
         setState(() {
           data = json;
-          controller.clear();
         });
         setState(() {
           Timer(Duration(seconds: 3), () {
             data.clear();
+            controller.clear();
           });
         });
       }
@@ -343,6 +335,7 @@ class _MasukState extends State<Masuk> {
                   setState(() {
                     Timer(Duration(seconds: 3), () {
                       data.clear();
+                      
                     });
                   });
                 } else {
@@ -370,11 +363,11 @@ class _MasukState extends State<Masuk> {
       } else {
         setState(() {
           data = json;
-          controller.clear();
         });
         setState(() {
           Timer(Duration(seconds: 3), () {
             data.clear();
+            controller.clear();
           });
         });
       }

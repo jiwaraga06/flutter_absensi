@@ -322,32 +322,9 @@ class _LoginState extends State<Login> {
                         width: MediaQuery.of(context).size.width / 3,
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (list.isEmpty) {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Alert'),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [Text('Event Harus Di isi')],
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text('Ok'),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            } else {
-                              SharedPreferences pref = await SharedPreferences.getInstance();
-                              pref.setString('session', 'login');
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Masuk()));
-                            }
+                            SharedPreferences pref = await SharedPreferences.getInstance();
+                            pref.setString('session', 'login');
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Masuk()));
                           },
                           child: Text('MASUK'),
                         ),
