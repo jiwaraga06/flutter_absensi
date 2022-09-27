@@ -266,21 +266,23 @@ class _MasukState extends State<Masuk> {
                 if (jsonLast is List) {
                   setState(() {
                     data = jsonLast[0];
+                    controller.clear();
                   });
                   setState(() {
                     Timer(Duration(seconds: 3), () {
                       data.clear();
-                      controller.clear();
+                      // controller.clear();
                     });
                   });
                 } else {
                   setState(() {
                     data = json;
+                    controller.clear();
                   });
                   Timer(Duration(seconds: 3), () {
                     setState(() {
                       data.clear();
-                      controller.clear();
+                      // controller.clear();
                     });
                   });
                 }
@@ -328,21 +330,22 @@ class _MasukState extends State<Masuk> {
                 if (jsonLast is List) {
                   setState(() {
                     data = jsonLast[0];
+                    controller.clear();
                   });
                   setState(() {
                     Timer(Duration(seconds: 3), () {
                       data.clear();
-                      controller.clear();
+                      
                     });
                   });
                 } else {
                   setState(() {
                     data = json;
+                    controller.clear();
                   });
                   Timer(Duration(seconds: 3), () {
                     setState(() {
                       data.clear();
-                      controller.clear();
                     });
                   });
                 }
